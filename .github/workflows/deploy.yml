@@ -16,24 +16,30 @@ jobs:
       deployments: write
     name: Deploy to Cloudflare Pages
     steps:
-      - name: Checkout
+      - name: "☁️ Checkout repository"
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'pnpm'
-
-      - name: Install pnpm
+      - name: "📦 Install pnpm"
         uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 10.11.1
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
 
-      - name: Build
+      - name: "📦 Install dependencies"
+        run: pnpm install
+
+      - name: "🔎 Lint code"
+        run: pnpm run lint
+
+      - name: "📝 Checking code format"
+        run: pnpm run format:check
+
+      - name: "🚀 Build the project"
         run: pnpm run build
 
       - name: Publish to Cloudflare Pages
@@ -43,5 +49,3 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: tosinshada
           directory: dist
-          # Optional: Enable comments on PRs
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
