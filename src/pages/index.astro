@@ -24,36 +24,39 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
   <Header />
   <main id="main-content" data-layout="index">
     <section id="hero" class="pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Shada's Thoughts
-      </h1>
-      <a
-        target="_blank"
-        href="/rss.xml"
-        class="inline-block"
-        aria-label="rss feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
-
       <p>
-        My name is Tosin Shada. lives in lagos currently. builds simple
-        solutions with dotnet, typescript, rust and java. trying to learn
-        python, golang and haskell. loves to watch movies and makes a conscious
-        effort not to use tiktok our of fear of addiction.
+        I currently live in lagos and trying to build solutions with dotnet, 
+        typescript, rust, python and java. I'm interested in functional programming 
+        languages like haskell and elixir and would love to build a side project 
+        with them soon. I am also a fan of the applications of AI (not machine 
+        learning for now). I am currently learning Lawn Tennis and planning to 
+        start piano lessons soon.
+      </p>
+      <br/>
+      <p>
+        I will be using this space to share my thoughts on software development,
+        AI, tennis, music and life in general. I hope you find something useful here.
       </p>
       {
         // only display if at least one social link is enabled
         SOCIALS.length > 0 && (
           <div class="mt-4 flex flex-col sm:flex-row sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">Social Links:</div>
+            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">Links:</div>
             <Socials />
+            <a
+              target="_blank"
+              href="/rss.xml"
+              class="inline-block"
+              aria-label="rss feed"
+              title="RSS Feed"
+            >
+              <IconRss
+                width={18}
+                height={18}
+                class="scale-125 ml-2 stroke-3 rtl:-rotate-90"
+              />
+              <span class="sr-only">RSS Feed</span>
+            </a>
           </div>
         )
       }
