@@ -10,8 +10,7 @@ tags:
   - dotnet
   - legacy-systems
   - software-engineering
-description:
-  A partial guide on how to upgrade legacy systems in dotnet, focusing on best practices and common pitfalls.
+description: A partial guide on how to upgrade legacy systems in dotnet, focusing on best practices and common pitfalls.
 ---
 
 This is my first blog post and I will be discussing a recent experience I had with upgrading legacy systems from dotnet framework to dotnet core.
