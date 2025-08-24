@@ -12,6 +12,7 @@ title: "About"
 - python
 
 ## Project
+
 - [redis backed queue management]()
 - forking and extending a personal financial management app (tbd)
 - ai powered customer support platform (tbd)

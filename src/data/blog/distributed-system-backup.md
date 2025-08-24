@@ -19,7 +19,7 @@ is that the database can run as a cluster and ensure that a consensus is gotten 
 
 ## sidetrack
 
-i actually stumbled on this application while working on another interesting project for all the wrong reasons. it was one of those 
+i actually stumbled on this application while working on another interesting project for all the wrong reasons. it was one of those
 blockchain project that was called that just for the marketing and no one had done a deep dive to know whether or not a blockchain was
 the right fit for the problem we were trying to solve.
 
@@ -36,4 +36,4 @@ down to whether you want to delay computing the balance or committing the transa
 ## back to tigerbeetle
 
 during my research, i came across tigerbeetle that claimed to be able to perform hundreds of thousands of transactions per second while ensuring
-that the account balance is computed in real time. 
+that the account balance is computed in real time.
