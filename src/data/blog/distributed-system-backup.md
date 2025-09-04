@@ -2,15 +2,15 @@
 author: Tosin Shada
 pubDatetime: 2025-07-05T15:22:00Z
 modDatetime: 2025-07-05T15:22:00Z
-title: Is there a need to backup a distributed system?
-slug: is-there-a-need-to-backup-a-distributed-system
+title: Is there a need to backup a distributed database?
+slug: is-there-a-need-to-backup-a-distributed-database
 featured: true
-draft: false
+draft: true
 tags:
   - tigerbeetle
   - distributed-systems
   - software-engineering
-description: do we need to perform backups on a distributed system?
+description: do we need to perform backups on a distributed database?
 ---
 
 the short answer for me was yes. in my case, i was working on a wallet system and decided to use [tigerbeetle](https://tigerbeetle.com/)
