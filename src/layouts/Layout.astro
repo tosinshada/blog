@@ -1,6 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions";
-import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
+import { PUBLIC_GOOGLE_SITE_VERIFICATION, PUBLIC_GOOGLE_ANALYTICS_TAG } from "astro:env/client";
 import { SITE } from "@/config";
 import "@/styles/global.css";
 
@@ -127,6 +127,21 @@ const structuredData = {
         />
       )
     }
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src={`https://www.googletagmanager.com/gtag/js?id=${PUBLIC_GOOGLE_ANALYTICS_TAG}`}
+      is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", `${PUBLIC_GOOGLE_ANALYTICS_TAG}`);
+    </script>
 
     <ClientRouter />
 
