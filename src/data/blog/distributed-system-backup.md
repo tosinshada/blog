@@ -28,7 +28,7 @@ the problem with a blockchain and the more we tried to find a work around the cl
 
 out of frustration, i started researching on an interesting financial ledger problem i will try to describe below
 
-> how do you ensure real time balance on an account while also allowing thousands of transactions pass through it per second?
+> how do you ensure real time balance on an account while also allowing hundreds of thousands of transactions pass through it per second?
 
 now this might look like an easy problem, but trust me it wasn't and i will probably write a blog post on that later. but basically it comes
 down to whether you want to delay computing the balance or committing the transaction
