@@ -153,6 +153,8 @@ Compare this to:
 - Traditional REST API with database: ~1-5k TPS
 - Actor frameworks: ~20-50k TPS (depending on message complexity)
 
+**Important caveat**: These benchmarks represent the current implementation with basic WAL durability. When full production features are added (proper consensus protocol, comprehensive error handling, monitoring, snapshotting, and replication), throughput will decrease. However, the architecture is designed to maintain our target of 100k+ TPS even with these additional guarantees. The single-threaded core and batching strategy provide enough headroom to absorb the overhead of production-grade reliability features.
+
 ## Tradeoffs and Limitations
 
 Nothing is free. Here's what I gave up:
