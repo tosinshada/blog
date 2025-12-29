@@ -95,6 +95,7 @@ TCP Client → InputQueue → Sequencer → JournalQueue
 ```
 
 Each stage does one thing well:
+
 - **Sequencer**: Batches commands and assigns monotonic IDs
 - **Durability**: Writes to disk with group commit (one `fsync` per batch)
 - **Processor**: Applies batches to the in-memory state machine
@@ -133,17 +134,21 @@ Recovery is simple: replay the WAL on startup. Since the core state machine is d
 The results speak for themselves:
 
 **Single-threaded engine benchmark:**
+
 - 100-command batch: ~10 µs (10M TPS)
 - 1,000-command batch: ~100 µs (10M TPS)
 - 10,000-command batch: ~900 µs (11M TPS)
 
 **Sequential batches (realistic workload):**
+
 - 100 batches × 100 commands: ~9ms total (1.1M TPS)
 
 **With durability (WAL writes):**
+
 - Still achieving 100k+ TPS sustained
 
 Compare this to:
+
 - PostgreSQL stored procedures: ~10-20k TPS
 - Traditional REST API with database: ~1-5k TPS
 - Actor frameworks: ~20-50k TPS (depending on message complexity)
@@ -187,4 +192,3 @@ If you want to explore the code, it's all on [GitHub](https://github.com/tosinsh
 Would I use this in production? Not yet – it needs proper consensus (replacing the file-based lease with real leader election), better observability, and more edge case handling. But as a learning project and proof of concept, it exceeded my expectations.
 
 The most satisfying part? The entire core engine fits in a few hundred lines of code that I can reason about completely. In a world of increasingly complex abstractions, there's something beautiful about software you can fully understand.
-
