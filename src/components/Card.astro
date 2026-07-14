@@ -4,7 +4,7 @@ import type { CollectionEntry } from "astro:content";
 import { getPath } from "@/utils/getPath";
 import Datetime from "./Datetime.astro";
 
-export interface Props extends CollectionEntry<"blog"> {
+export interface Props extends CollectionEntry<"notes"> {
   variant?: "h2" | "h3";
 }
 
@@ -14,15 +14,12 @@ const { title, description, pubDatetime, modDatetime, timezone } = data;
 
 const headerProps = {
   style: { viewTransitionName: slugifyStr(title) },
-  class: "text-lg font-medium decoration-dashed hover:underline",
+  class: "font-sans text-base font-normal text-foreground",
 };
 ---
 
-<li class="my-6">
-  <a
-    href={getPath(id, filePath)}
-    class="inline-block text-lg font-medium text-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
-  >
+<li class="border-b border-border last:border-0">
+  <a href={getPath(id, filePath)} class="block py-5 hover:opacity-80">
     {
       variant === "h2" ? (
         <h2 {...headerProps}>{title}</h2>
@@ -30,7 +27,9 @@ const headerProps = {
         <h3 {...headerProps}>{title}</h3>
       )
     }
+    <Datetime {pubDatetime} {modDatetime} {timezone} />
+    <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+      {description}
+    </p>
   </a>
-  <Datetime {pubDatetime} {modDatetime} {timezone} />
-  <p>{description}</p>
 </li>

@@ -19,6 +19,10 @@ export default defineConfig({
       filter: page => SITE.showArchives || !page.endsWith("/archives"),
     }),
   ],
+  redirects: {
+    "/posts": "/notes",
+    "/posts/[...slug]": "/notes/[...slug]",
+  },
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
     shikiConfig: {

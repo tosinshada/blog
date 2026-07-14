@@ -11,16 +11,16 @@ import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
-  return paginate(getSortedPosts(posts), { pageSize: SITE.postPerPage });
+  const notes = await getCollection("notes", ({ data }) => !data.draft);
+  return paginate(getSortedPosts(notes), { pageSize: SITE.notesPerPage });
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
 ---
 
-<Layout title={`Posts | ${SITE.title}`}>
+<Layout title={`Notes | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Posts" pageDesc="Some of my thoughts.">
+  <Main pageTitle="Notes" pageDesc="All of my notes, in one place.">
     <ul>
       {page.data.map(data => <Card {...data} />)}
     </ul>

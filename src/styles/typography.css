@@ -8,7 +8,10 @@
     h1,
     h2,
     h3,
-    h4,
+    h4 {
+      @apply mb-3 font-serif font-medium text-heading;
+    }
+
     th {
       @apply mb-3 text-foreground;
     }
