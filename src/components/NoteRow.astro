@@ -10,7 +10,7 @@ import { SITE } from "@/config";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-export interface Props extends CollectionEntry<"notes"> {}
+export type Props = CollectionEntry<"notes">;
 
 const { data, id, filePath } = Astro.props;
 const {
