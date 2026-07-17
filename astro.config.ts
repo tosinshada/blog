@@ -14,11 +14,11 @@ import { SITE } from "./src/config";
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
-  integrations: [
-    sitemap({
-      filter: page => SITE.showArchives || !page.endsWith("/archives"),
-    }),
-  ],
+  integrations: [sitemap()],
+  redirects: {
+    "/posts": "/notes",
+    "/posts/[...slug]": "/notes/[...slug]",
+  },
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
     shikiConfig: {

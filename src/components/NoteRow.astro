@@ -1,0 +1,56 @@
+---
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import { slugifyStr } from "@/utils/slugify";
+import type { CollectionEntry } from "astro:content";
+import { getPath } from "@/utils/getPath";
+import { SITE } from "@/config";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+export interface Props extends CollectionEntry<"notes"> {}
+
+const { data, id, filePath } = Astro.props;
+const {
+  title,
+  description,
+  pubDatetime,
+  modDatetime,
+  timezone: postTimezone,
+} = data;
+
+const isModified = modDatetime && modDatetime > pubDatetime;
+const datetime = dayjs(isModified ? modDatetime : pubDatetime).tz(
+  postTimezone || SITE.timezone
+);
+const date = datetime.format("MMM D, YYYY"); // e.g., 'Mar 22, 2025'
+---
+
+<li class="border-b border-border last:border-0">
+  <a
+    href={getPath(id, filePath)}
+    class="flex items-baseline gap-x-6 py-4 hover:opacity-80"
+  >
+    <time
+      class="w-28 shrink-0 text-sm text-muted-foreground"
+      datetime={datetime.toISOString()}>{date}</time
+    >
+    <div>
+      <h2
+        style={{ viewTransitionName: slugifyStr(title) }}
+        class="font-sans text-base font-normal text-foreground"
+      >
+        {title}
+      </h2>
+      {
+        description && (
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+            {description}
+          </p>
+        )
+      }
+    </div>
+  </a>
+</li>

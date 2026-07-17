@@ -1,0 +1,50 @@
+---
+import type { GetStaticPaths, Page } from "astro";
+import { type CollectionEntry, getCollection } from "astro:content";
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import Pagination from "@/components/Pagination.astro";
+import getUniqueTags from "@/utils/getUniqueTags";
+import getPostsByTag from "@/utils/getPostsByTag";
+import { SITE } from "@/config";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getCollection("notes", ({ data }) => !data.draft);
+  const tags = getUniqueTags(posts);
+
+  return tags.flatMap(({ tag, tagName }) =>
+    paginate(getPostsByTag(posts, tag), {
+      params: { tag },
+      props: { tagName },
+      pageSize: SITE.notesPerPage,
+    })
+  );
+}) satisfies GetStaticPaths;
+
+export interface Props {
+  page: Page<CollectionEntry<"notes">>;
+  tagName: string;
+}
+
+const { page, tagName } = Astro.props;
+---
+
+<Layout title={`Tag: ${tagName} | ${SITE.title}`}>
+  <Header />
+  <Main
+    pageTitle={["Tag:", ` ${tagName}`]}
+    titleTransition={tagName}
+    pageDesc={`Notes tagged with "${tagName}".`}
+  >
+    <ul>
+      {page.data.map(data => <Card {...data} />)}
+    </ul>
+  </Main>
+
+  <Pagination {page} />
+
+  <Footer noMarginTop={page.lastPage > 1} />
+</Layout>

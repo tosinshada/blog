@@ -6,7 +6,6 @@ import Footer from "@/components/Footer.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
 import EditPost from "@/components/EditPost.astro";
-import ShareLinks from "@/components/ShareLinks.astro";
 import BackButton from "@/components/BackButton.astro";
 import BackToTopButton from "@/components/BackToTopButton.astro";
 import { getPath } from "@/utils/getPath";
@@ -16,8 +15,8 @@ import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import { SITE } from "@/config";
 
 export interface Props {
-  post: CollectionEntry<"blog">;
-  posts: CollectionEntry<"blog">[];
+  post: CollectionEntry<"notes">;
+  posts: CollectionEntry<"notes">[];
 }
 
 const { post, posts } = Astro.props;
@@ -35,7 +34,10 @@ const {
   hideEditPost,
 } = post.data;
 
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+
+// Only show top-level sections in the table of contents, matching the design
+const tocHeadings = headings.filter(({ depth }) => depth === 2);
 
 let ogImageUrl: string | undefined;
 
@@ -87,74 +89,105 @@ const nextPost =
   <BackButton />
   <main
     id="main-content"
-    class:list={[
-      "mx-auto w-full max-w-app px-4 pb-12",
-      { "mt-8": !SITE.showBackButton },
-    ]}
+    class:list={["mx-auto w-full px-4 pb-12", { "mt-8": !SITE.showBackButton }]}
     data-pagefind-body
   >
-    <h1
-      transition:name={slugifyStr(title)}
-      class="inline-block text-2xl font-bold text-accent sm:text-3xl"
-    >
-      {title}
-    </h1>
-    <div class="my-2 flex items-center gap-2">
-      <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
-      <span aria-hidden="true" class="max-sm:hidden">|</span>
-      <EditPost {hideEditPost} {post} class="max-sm:hidden" />
+    <div class="mx-auto max-w-[800px] pt-4 pb-10 text-center sm:pt-8">
+      <h1
+        transition:name={slugifyStr(title)}
+        class="font-serif text-3xl leading-tight font-medium text-heading sm:text-4xl md:text-[52px]"
+      >
+        {title}
+      </h1>
+      {
+        description && (
+          <p class="mx-auto mt-4 max-w-[600px] text-base text-muted-foreground">
+            {description}
+          </p>
+        )
+      }
+      <p class="mt-6 text-sm font-medium text-foreground/90">{author}</p>
+      <div class="mt-1 flex items-center justify-center gap-2">
+        <Datetime {pubDatetime} {modDatetime} {timezone} hideIcon />
+      </div>
     </div>
-    <article
-      id="article"
-      class="app-prose mx-auto mt-8 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
+
+    <div
+      class="mx-auto grid max-w-[1100px] grid-cols-1 gap-x-12 gap-y-8 lg:grid-cols-[220px_1fr]"
     >
-      <Content />
-    </article>
-
-    <hr class="my-8 border-dashed" />
-
-    <EditPost class="sm:hidden" {hideEditPost} {post} />
-
-    <ul class="mt-4 mb-8 sm:my-8">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
-    </ul>
-
-    <BackToTopButton />
-
-    <ShareLinks />
-
-    <hr class="my-6 border-dashed" />
-
-    <!-- Previous/Next Post Buttons -->
-    <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">
       {
-        prevPost && (
-          <a
-            href={getPath(prevPost.id, prevPost.filePath)}
-            class="flex w-full gap-1 hover:opacity-75"
+        tocHeadings.length > 0 && (
+          <nav
+            data-pagefind-ignore
+            aria-label="Table of contents"
+            class="hidden text-sm leading-loose lg:sticky lg:top-8 lg:block lg:h-fit"
           >
-            <IconChevronLeft class="inline-block flex-none rtl:rotate-180" />
-            <div>
-              <span>Previous Post</span>
-              <div class="text-sm text-accent/85">{prevPost.title}</div>
-            </div>
-          </a>
+            {tocHeadings.map(heading => (
+              <a
+                href={`#${heading.slug}`}
+                class="block text-muted-foreground hover:text-accent"
+              >
+                {heading.text}
+              </a>
+            ))}
+          </nav>
         )
       }
-      {
-        nextPost && (
-          <a
-            href={getPath(nextPost.id, nextPost.filePath)}
-            class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
-          >
-            <div>
-              <span>Next Post</span>
-              <div class="text-sm text-accent/85">{nextPost.title}</div>
-            </div>
-            <IconChevronRight class="inline-block flex-none rtl:rotate-180" />
-          </a>
-        )
-      }
+
+      <div class="min-w-0">
+        <div class="mb-6 flex items-center gap-2">
+          <EditPost {hideEditPost} {post} />
+        </div>
+
+        <article
+          id="article"
+          class="app-prose max-w-none prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
+        >
+          <Content />
+        </article>
+
+        <hr class="my-8 border-border" />
+
+        <ul class="mb-8">
+          {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
+        </ul>
+
+        <BackToTopButton />
+
+        <hr class="my-6 border-border" />
+
+        <!-- Previous/Next Note Buttons -->
+        <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          {
+            prevPost && (
+              <a
+                href={getPath(prevPost.id, prevPost.filePath)}
+                class="flex w-full gap-1 hover:opacity-75"
+              >
+                <IconChevronLeft class="inline-block flex-none rtl:rotate-180" />
+                <div>
+                  <span>Previous</span>
+                  <div class="text-sm text-accent/85">{prevPost.title}</div>
+                </div>
+              </a>
+            )
+          }
+          {
+            nextPost && (
+              <a
+                href={getPath(nextPost.id, nextPost.filePath)}
+                class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
+              >
+                <div>
+                  <span>Next</span>
+                  <div class="text-sm text-accent/85">{nextPost.title}</div>
+                </div>
+                <IconChevronRight class="inline-block flex-none rtl:rotate-180" />
+              </a>
+            )
+          }
+        </div>
+      </div>
     </div>
   </main>
   <Footer />

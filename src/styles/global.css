@@ -5,27 +5,39 @@
 
 :root,
 html[data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --muted: #e6e6e6;
-  --border: #ece9e9;
+  --background: oklch(0.97 0.012 75);
+  --foreground: oklch(0.22 0.01 60);
+  --heading: oklch(0.2 0.012 55);
+  --accent: oklch(0.35 0.09 45);
+  --muted: oklch(0.93 0.014 72);
+  --muted-foreground: oklch(0.5 0.015 60);
+  --border: oklch(0.87 0.015 70);
+  --card: oklch(0.99 0.008 75);
 }
 
 html[data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --muted: #343f60bf;
-  --border: #ab4b08;
+  --background: oklch(0.22 0.014 55);
+  --foreground: oklch(0.92 0.008 70);
+  --heading: oklch(0.95 0.006 70);
+  --accent: oklch(0.75 0.09 55);
+  --muted: oklch(0.3 0.018 55);
+  --muted-foreground: oklch(0.68 0.015 65);
+  --border: oklch(0.36 0.02 55);
+  --card: oklch(0.26 0.016 55);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-heading: var(--heading);
   --color-accent: var(--accent);
   --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-card: var(--card);
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Source Serif 4", ui-serif, Georgia, serif;
 }
 
 @layer base {
@@ -38,7 +50,7 @@ html[data-theme="dark"] {
     @apply overflow-y-scroll scroll-smooth;
   }
   body {
-    @apply flex min-h-svh flex-col bg-background font-mono text-foreground selection:bg-accent/75 selection:text-background;
+    @apply flex min-h-svh flex-col bg-background font-sans text-foreground selection:bg-accent/75 selection:text-background;
   }
   a,
   button {
@@ -52,14 +64,26 @@ html[data-theme="dark"] {
   footer {
     @apply mx-auto max-w-app px-4;
   }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif text-heading;
+  }
 }
 
 @utility max-w-app {
-  @apply max-w-3xl;
+  @apply max-w-[700px];
+}
+
+.link-underline {
+  @apply border-b border-accent/40 transition-colors hover:border-accent hover:text-accent;
 }
 
 .active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-4;
+  @apply border-b border-accent text-accent;
 }
 
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
