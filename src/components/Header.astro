@@ -2,7 +2,6 @@
 import IconX from "@/assets/icons/IconX.svg";
 import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconSearch from "@/assets/icons/IconSearch.svg";
-import IconArchive from "@/assets/icons/IconArchive.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
 import LinkButton from "./LinkButton.astro";
@@ -32,7 +31,7 @@ const isActive = (path: string) => {
   </a>
   <div
     id="nav-container"
-    class="mx-auto flex max-w-app flex-col items-center justify-between sm:flex-row"
+    class="mx-auto flex w-full flex-col items-center justify-between sm:flex-row"
   >
     <div
       id="top-nav-wrap"
@@ -40,7 +39,7 @@ const isActive = (path: string) => {
     >
       <a
         href="/"
-        class="absolute font-serif text-sm leading-8 font-semibold tracking-[0.12em] whitespace-nowrap text-muted-foreground sm:static sm:my-auto sm:leading-none"
+        class="absolute font-sans text-sm leading-8 font-normal tracking-[0.16em] whitespace-nowrap text-muted-foreground sm:static sm:my-auto sm:leading-none"
       >
         TOSIN SHADA
       </a>
@@ -89,26 +88,6 @@ const isActive = (path: string) => {
           <li class="col-span-2">
             <a href="/#contact" class="link-underline">Contact</a>
           </li>
-          {
-            SITE.showArchives && (
-              <li class="col-span-2 sm:col-span-1 sm:flex sm:items-center sm:justify-center">
-                <LinkButton
-                  href="/archives"
-                  class:list={[
-                    "focus-outline flex justify-center p-3 sm:p-1",
-                    {
-                      "active-nav [&>svg]:stroke-accent": isActive("/archives"),
-                    },
-                  ]}
-                  ariaLabel="archives"
-                  title="Archives"
-                >
-                  <IconArchive class="hidden size-4 sm:inline-block" />
-                  <span class="sm:sr-only">Archives</span>
-                </LinkButton>
-              </li>
-            )
-          }
           <li class="col-span-1 flex items-center justify-center">
             <LinkButton
               href="/search"

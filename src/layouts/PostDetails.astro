@@ -6,7 +6,6 @@ import Footer from "@/components/Footer.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
 import EditPost from "@/components/EditPost.astro";
-import ShareLinks from "@/components/ShareLinks.astro";
 import BackButton from "@/components/BackButton.astro";
 import BackToTopButton from "@/components/BackToTopButton.astro";
 import { getPath } from "@/utils/getPath";
@@ -100,9 +99,16 @@ const nextPost =
       >
         {title}
       </h1>
+      {
+        description && (
+          <p class="mx-auto mt-4 max-w-[600px] text-base text-muted-foreground">
+            {description}
+          </p>
+        )
+      }
       <p class="mt-6 text-sm font-medium text-foreground/90">{author}</p>
       <div class="mt-1 flex items-center justify-center gap-2">
-        <Datetime {pubDatetime} {modDatetime} {timezone} />
+        <Datetime {pubDatetime} {modDatetime} {timezone} hideIcon />
       </div>
     </div>
 
@@ -147,8 +153,6 @@ const nextPost =
         </ul>
 
         <BackToTopButton />
-
-        <ShareLinks />
 
         <hr class="my-6 border-border" />
 
