@@ -16,9 +16,7 @@ const tags = getUniqueTags(posts);
   <Header />
   <Main pageTitle="Tags" pageDesc="Notes, grouped by topic.">
     <ul class="flex flex-wrap justify-center gap-2">
-      {tags.map(({ tag, tagName }) => (
-        <Tag {tag} {tagName} size="lg" />
-      ))}
+      {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} size="lg" />)}
     </ul>
   </Main>
   <Footer />

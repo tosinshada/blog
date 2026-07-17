@@ -69,7 +69,10 @@ const isActive = (path: string) => {
           <li class="col-span-2">
             <a
               href="/notes"
-              class:list={["link-underline", { "active-nav": isActive("/notes") }]}
+              class:list={[
+                "link-underline",
+                { "active-nav": isActive("/notes") },
+              ]}
             >
               Notes
             </a>
@@ -80,7 +83,10 @@ const isActive = (path: string) => {
           <li class="col-span-2">
             <a
               href="/about"
-              class:list={["link-underline", { "active-nav": isActive("/about") }]}
+              class:list={[
+                "link-underline",
+                { "active-nav": isActive("/about") },
+              ]}
             >
               About
             </a>

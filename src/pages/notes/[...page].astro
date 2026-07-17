@@ -20,9 +20,7 @@ const { page } = Astro.props;
 
 <Layout title={`Notes | ${SITE.title}`}>
   <Header />
-  <Main
-    pageTitle="Notes"
-  >
+  <Main pageTitle="Notes">
     <ul>
       {page.data.map(data => <NoteRow {...data} />)}
     </ul>
